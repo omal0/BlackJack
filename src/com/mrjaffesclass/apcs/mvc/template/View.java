@@ -1,5 +1,7 @@
 package com.mrjaffesclass.apcs.mvc.template;
 import com.mrjaffesclass.apcs.messenger.*;
+import java.awt.Image;
+import javax.swing.ImageIcon;
 /**
  * MVC Template
  * This is a template of an MVC framework used by APCS for the 
@@ -26,6 +28,8 @@ public class View extends javax.swing.JFrame implements MessageHandler {
    * to any required messages
    */
   public void init() {
+    Image image = GenerateImage.toImage(true);
+    ImageIcon icon = new ImageIcon("images/2_of_clubs.png");
     // Subscribe to messages here
     
   }
@@ -51,32 +55,44 @@ public class View extends javax.swing.JFrame implements MessageHandler {
         jButton1 = new javax.swing.JButton();
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
+        jLabel3 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
         jButton1.setText("Forfeit Hand");
 
-        jButton2.setText("TORF");
+        jButton2.setText("Stay (torf)");
 
-        jButton3.setText("jButton3");
+        jButton3.setText("Hit");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jLabel3.setText("Dealer Hand:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(251, Short.MAX_VALUE)
+            .addGroup(layout.createSequentialGroup()
+                .addGap(18, 18, 18)
                 .addComponent(jButton3)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addComponent(jButton2)
-                .addGap(18, 18, 18)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
                 .addComponent(jButton1)
                 .addGap(14, 14, 14))
+            .addGroup(layout.createSequentialGroup()
+                .addComponent(jLabel3)
+                .addGap(0, 0, Short.MAX_VALUE))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
-                .addContainerGap(287, Short.MAX_VALUE)
+                .addComponent(jLabel3)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jButton1)
                     .addComponent(jButton2)
@@ -87,6 +103,10 @@ public class View extends javax.swing.JFrame implements MessageHandler {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        jLabel1.setIcon(icon);
+    }//GEN-LAST:event_jButton3ActionPerformed
+
   /**
    * @param args the command line arguments
    */
@@ -95,5 +115,6 @@ public class View extends javax.swing.JFrame implements MessageHandler {
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
+    private javax.swing.JLabel jLabel3;
     // End of variables declaration//GEN-END:variables
 }
