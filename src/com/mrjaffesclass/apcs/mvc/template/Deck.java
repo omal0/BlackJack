@@ -23,7 +23,7 @@ public class Deck {
         String[] faces = {"2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace"};
         for (String suit : suits) {
             for (int i=0; i<ranks.length; i++) {
-                Card c = new Card(ranks[i], faces[i], suit);
+                Card c = new Card(ranks[i], suit, faces[i]);
                 this.deck.add(c);
             }
         }
@@ -37,8 +37,12 @@ public class Deck {
         }
         
         for(int i = 0; i < secondDeck.size(); i++) {
-            int random = math.random() * secondDeck.size();
+            int random = (int) (Math.random() * secondDeck.size());
             
         }
+    }
+    
+    public int getDeckSize() {
+        return this.deck.size();
     }
 }

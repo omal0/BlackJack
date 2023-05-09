@@ -12,13 +12,11 @@ public class Card {
     private int rank;
     private String suit;
     private String face;
-    private String location;
     
-    public Card(int Rank, String Suit, String Face, String Location) {
+    public Card(int Rank, String Suit, String Face) {
         this.rank = Rank;
         this.suit = Suit;
         this.face = Face;
-        this.location = Location;
     }
     
     /*
@@ -35,10 +33,7 @@ public class Card {
         return suit;
     }
     
-    /*
-    returns the location of the image
-    */
-    public String getLocation() {
-        return location;
+    public String getFace() {
+        return face;
     }
 }
