@@ -1,6 +1,7 @@
 package com.mrjaffesclass.apcs.mvc.template;
 
 import com.mrjaffesclass.apcs.messenger.*;
+import java.util.ArrayList;
 
 /**
  * The model represents the data that the app uses.
@@ -13,6 +14,9 @@ public class Model implements MessageHandler {
   private final Messenger mvcMessaging;
 
   // Model's data variables
+  ArrayList<Card> p1;
+  ArrayList<Card> p2;
+  boolean gameOver;
   /**
    * Model constructor: Create the data representation of the program
    * @param messages Messaging class instantiated by the Controller for 
@@ -26,7 +30,20 @@ public class Model implements MessageHandler {
    * Initialize the model here and subscribe to any required messages
    */
   public void init() {
+      p1 = new ArrayList<Card>();
+      p2 = new ArrayList<Card>();
+      gameOver = false;
       
+      this.newGame();
+      
+      this.mvcMessaging.subscribe("quit", this);
+      this.mvcMessaging.subscribe("stay", this);
+      this.mvcMessaging.subscribe("hit", this);
+  }
+  
+  private void newGame() {
+      p1.clear();
+      p2.clear();
   }
   
   @Override
@@ -35,6 +52,18 @@ public class Model implements MessageHandler {
       System.out.println("MSG: received by model: "+messageName+" | "+messagePayload.toString());
     } else {
       System.out.println("MSG: received by model: "+messageName+" | No data sent");
+    }
+    
+    if (messageName.equals("hit")) {
+        
+    }
+    
+    if (messageName.equals("stay")) {
+        
+    }
+    
+    if (messageName.equals("quit")) {
+        
     }
   }
 }
