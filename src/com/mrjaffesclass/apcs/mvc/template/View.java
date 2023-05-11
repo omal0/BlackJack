@@ -106,13 +106,12 @@ public class View extends javax.swing.JFrame implements MessageHandler {
     }// </editor-fold>//GEN-END:initComponents
 
     private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
-        
+        this.mvcMessaging.notify("hit");
     }//GEN-LAST:event_jButton3ActionPerformed
 
   /**
    * @param args the command line arguments
    */
-
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
