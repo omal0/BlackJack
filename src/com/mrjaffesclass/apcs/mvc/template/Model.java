@@ -14,9 +14,10 @@ public class Model implements MessageHandler {
   private final Messenger mvcMessaging;
 
   // Model's data variables
-  ArrayList<Card> p1;
-  ArrayList<Card> p2;
+  ArrayList<Card> player;
+  ArrayList<Card> dealer;
   boolean gameOver;
+  Deck deck;
   /**
    * Model constructor: Create the data representation of the program
    * @param messages Messaging class instantiated by the Controller for 
@@ -30,8 +31,8 @@ public class Model implements MessageHandler {
    * Initialize the model here and subscribe to any required messages
    */
   public void init() {
-      p1 = new ArrayList<Card>();
-      p2 = new ArrayList<Card>();
+      player = new ArrayList<Card>();
+      dealer = new ArrayList<Card>();
       gameOver = false;
       
       this.newGame();
@@ -42,8 +43,29 @@ public class Model implements MessageHandler {
   }
   
   private void newGame() {
-      p1.clear();
-      p2.clear();
+      player.clear();
+      dealer.clear();
+      
+      deck = new Deck();
+      deck.shuffle();
+      
+      deck.dealCard(player);
+      deck.dealCard(dealer);
+      deck.dealCard(player);
+      deck.dealCard(dealer);
+      
+      mvcMessaging.notify("boardChangePlayer", this.player);
+      mvcMessaging.notify("boardChangeDealer", this.dealer);
+  }
+  
+  public int playerValue(ArrayList<Card> player) {
+      for (int i = 0; i < player.length(); i++) {
+          
+      }
+  }
+  
+  public void dealerAI() {
+      
   }
   
   @Override
@@ -55,7 +77,8 @@ public class Model implements MessageHandler {
     }
     
     if (messageName.equals("hit")) {
-        
+        deck.dealCard(player);
+        mvcMessaging.notify("boardChangePlayer", this.player);
     }
     
     if (messageName.equals("stay")) {

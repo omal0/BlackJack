@@ -30,7 +30,8 @@ public class View extends javax.swing.JFrame implements MessageHandler {
    */
   public void init() {
     // Subscribe to messages here
-    this.mvcMessaging.subscribe("boardChange", this);
+    this.mvcMessaging.subscribe("boardChangePlayer", this);
+    this.mvcMessaging.subscribe("boardChangeDealer", this);
   }
   
   @Override
@@ -40,8 +41,27 @@ public class View extends javax.swing.JFrame implements MessageHandler {
     } else {
       System.out.println("MSG: received by view: "+messageName+" | No data sent");
     }
-    if (messageName.equals("boardChange")) {
+    
+    if (messageName.equals("boardChangePlayer")) {
+        String Cards = "";
+        Card[] board = (Card[]) messagePayload;
         
+        for (int i = 0; i < board.length; i++) {
+            Cards = Cards + " " + board[i].getFace();
+        }
+        
+        PlayerCards.setText(Cards);
+    }
+    
+    if (messageName.equals("boardChangeDealer")) {
+        String Cards = "";
+        Card[] board = (Card[]) messagePayload;
+        
+        for (int i = 0; i < board.length; i++) {
+            Cards = Cards + " " + board[i].getFace();
+        }
+        
+        DealerCards.setText(Cards);
     }
   }
 
@@ -58,6 +78,9 @@ public class View extends javax.swing.JFrame implements MessageHandler {
         jButton2 = new javax.swing.JButton();
         jButton3 = new javax.swing.JButton();
         jLabel3 = new javax.swing.JLabel();
+        jLabel4 = new javax.swing.JLabel();
+        DealerCards = new javax.swing.JLabel();
+        PlayerCards = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
 
@@ -72,34 +95,57 @@ public class View extends javax.swing.JFrame implements MessageHandler {
             }
         });
 
-        jLabel3.setText("Dealer Hand:");
+        jLabel3.setText("Your Hand:");
+
+        jLabel4.setText("Dealer Hand:");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
         layout.setHorizontalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
-                .addComponent(jLabel3)
-                .addGap(0, 0, Short.MAX_VALUE))
-            .addGroup(layout.createSequentialGroup()
-                .addGap(18, 18, 18)
-                .addComponent(jButton3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
-                .addComponent(jButton2)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 246, Short.MAX_VALUE)
-                .addComponent(jButton1)
-                .addGap(14, 14, 14))
+                .addContainerGap()
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(jButton3)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton2)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                        .addComponent(jButton1))
+                    .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                        .addGap(0, 0, Short.MAX_VALUE)
+                        .addComponent(jLabel3, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGroup(layout.createSequentialGroup()
+                        .addComponent(DealerCards, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 23, Short.MAX_VALUE)
+                        .addComponent(PlayerCards, javax.swing.GroupLayout.PREFERRED_SIZE, 274, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(10, 10, 10)
+                    .addComponent(jLabel4, javax.swing.GroupLayout.PREFERRED_SIZE, 256, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addContainerGap(299, Short.MAX_VALUE)))
         );
         layout.setVerticalGroup(
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
+                .addContainerGap()
                 .addComponent(jLabel3)
-                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 269, Short.MAX_VALUE)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addComponent(DealerCards, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
+                    .addComponent(PlayerCards, javax.swing.GroupLayout.DEFAULT_SIZE, 253, Short.MAX_VALUE))
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jButton1)
+                    .addComponent(jButton3)
                     .addComponent(jButton2)
-                    .addComponent(jButton3))
-                .addGap(14, 14, 14))
+                    .addComponent(jButton1))
+                .addContainerGap())
+            .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createSequentialGroup()
+                    .addGap(10, 10, 10)
+                    .addComponent(jLabel4)
+                    .addContainerGap(297, Short.MAX_VALUE)))
         );
 
         pack();
@@ -113,9 +159,12 @@ public class View extends javax.swing.JFrame implements MessageHandler {
    * @param args the command line arguments
    */
     // Variables declaration - do not modify//GEN-BEGIN:variables
+    private javax.swing.JLabel DealerCards;
+    private javax.swing.JLabel PlayerCards;
     private javax.swing.JButton jButton1;
     private javax.swing.JButton jButton2;
     private javax.swing.JButton jButton3;
     private javax.swing.JLabel jLabel3;
+    private javax.swing.JLabel jLabel4;
     // End of variables declaration//GEN-END:variables
 }

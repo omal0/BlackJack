@@ -45,4 +45,9 @@ public class Deck {
     public int getDeckSize() {
         return this.deck.size();
     }
+    
+    public void dealCard(ArrayList<Card> player) {
+        player.add(this.deck.get(0));
+        this.deck.remove(0);
+    }
 }
