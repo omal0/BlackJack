@@ -16,7 +16,6 @@ public class Model implements MessageHandler {
   // Model's data variables
   ArrayList<Card> player;
   ArrayList<Card> dealer;
-  boolean gameOver;
   Deck deck;
   /**
    * Model constructor: Create the data representation of the program
@@ -33,7 +32,7 @@ public class Model implements MessageHandler {
   public void init() {
       player = new ArrayList<Card>();
       dealer = new ArrayList<Card>();
-      gameOver = false;
+      deck = new Deck();
       
       this.newGame();
       
@@ -43,29 +42,39 @@ public class Model implements MessageHandler {
   }
   
   private void newGame() {
-      player.clear();
-      dealer.clear();
+      this.player.clear();
+      this.dealer.clear();
+      this.deck.clearDeck();
       
-      deck = new Deck();
-      deck.shuffle();
-      
-      deck.dealCard(player);
-      deck.dealCard(dealer);
-      deck.dealCard(player);
-      deck.dealCard(dealer);
-      
-      mvcMessaging.notify("boardChangePlayer", this.player);
-      mvcMessaging.notify("boardChangeDealer", this.dealer);
-  }
-  
-  public int playerValue(ArrayList<Card> player) {
-      for (int i = 0; i < player.length(); i++) {
-          
+      this.deck.InitNewDeck();
+      this.deck.shuffle();
+
+      for(int i = 0; i < 2; i++) {
+        this.deck.dealCard(player);
+        this.deck.dealCard(dealer);
       }
   }
-  
-  public void dealerAI() {
-      
+
+  public void DealerAI() {
+    while (countCards(dealer) < 17) {
+      this.deck.dealCard(dealer);
+    }
+  }
+
+  public int countCards(ArrayList<Card> player) {
+    int count = 0;
+
+    for (int i = 0; i < player.size(); i++) {
+      if (player.get(i).getFace().equals("Ace") && count + player.get(i).getRank() > 21) {
+        count += 1;
+      } else if (player.get(i).getFace().equals("Ace") && count < 10) {
+        count += 11;
+      } else {
+        count += player.get(i).getRank();
+      }
+    }
+
+    return count;
   }
   
   @Override
@@ -77,16 +86,21 @@ public class Model implements MessageHandler {
     }
     
     if (messageName.equals("hit")) {
-        deck.dealCard(player);
-        mvcMessaging.notify("boardChangePlayer", this.player);
+        
     }
     
     if (messageName.equals("stay")) {
-        
+        DealerAI();
+
+        if (countCards(dealer) > countCards(player)) {
+          mvcMessaging.notify("dealer");
+        } else {
+          mvcMessaging.notify("player");
+        }
     }
     
     if (messageName.equals("quit")) {
-        
+        this.newGame();
     }
   }
 }

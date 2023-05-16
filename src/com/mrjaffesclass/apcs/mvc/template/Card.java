@@ -23,17 +23,17 @@ public class Card {
     returns the rank
     */
     public int getRank() {
-        return rank;
+        return this.rank;
     }
     
     /*
     returns the suit
     */
     public String getSuit() {
-        return suit;
+        return this.suit;
     }
     
     public String getFace() {
-        return face;
+        return this.face;
     }
 }

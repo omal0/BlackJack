@@ -23,8 +23,16 @@ public class Deck {
         String[] faces = {"2","3","4","5","6","7","8","9","10","Jack","Queen","King","Ace"};
         for (String suit : suits) {
             for (int i=0; i<ranks.length; i++) {
-                Card c = new Card(ranks[i], suit, faces[i]);
-                this.deck.add(c);
+                if (faces[i] == "Jack" || faces[i] == "Queen" || faces[i] == "King") {
+                    Card c = new Card(10, suit, faces[i]);
+                    this.deck.add(c);
+                } else if (faces[i] == "Ace") {
+                    Card c = new Card(11, suit, faces[i]);
+                    this.deck.add(c);
+                } else {
+                    Card c = new Card(ranks[i], suit, faces[i]);
+                    this.deck.add(c);
+                }
             }
         }
     }
@@ -33,21 +41,26 @@ public class Deck {
         ArrayList secondDeck = (ArrayList)deck.clone();
         
         for(int i = 0; i < this.deck.size(); i++) {
-            deck.remove(0);
+            this.deck.remove(0);
         }
         
         for(int i = 0; i < secondDeck.size(); i++) {
             int random = (int) (Math.random() * secondDeck.size());
-            
         }
     }
     
     public int getDeckSize() {
         return this.deck.size();
     }
-    
+
     public void dealCard(ArrayList<Card> player) {
         player.add(this.deck.get(0));
         this.deck.remove(0);
+    }
+    
+    public void clearDeck() {
+        for (int i = 0; i < this.deck.size(); i++) {
+            this.deck.remove(0);
+        }
     }
 }
