@@ -5,6 +5,7 @@
 package com.mrjaffesclass.apcs.mvc.template;
 
 import java.util.ArrayList;
+import java.util.Collections;
 
 /**
  *
@@ -38,15 +39,7 @@ public class Deck {
     }
     
     public void shuffle() {
-        ArrayList secondDeck = (ArrayList)deck.clone();
-        
-        for(int i = 0; i < this.deck.size(); i++) {
-            this.deck.remove(0);
-        }
-        
-        for(int i = 0; i < secondDeck.size(); i++) {
-            int random = (int) (Math.random() * secondDeck.size());
-        }
+        Collections.shuffle(this.deck);
     }
     
     public int getDeckSize() {

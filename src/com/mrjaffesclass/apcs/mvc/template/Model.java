@@ -2,6 +2,7 @@ package com.mrjaffesclass.apcs.mvc.template;
 
 import com.mrjaffesclass.apcs.messenger.*;
 import java.util.ArrayList;
+import java.util.Collection;
 
 /**
  * The model represents the data that the app uses.
@@ -53,6 +54,8 @@ public class Model implements MessageHandler {
         this.deck.dealCard(player);
         this.deck.dealCard(dealer);
       }
+      mvcMessaging.notify("boardChangePlayer", this.player);
+      mvcMessaging.notify("boardChangeDealer", this.dealer);
   }
 
   public void DealerAI() {
@@ -86,7 +89,8 @@ public class Model implements MessageHandler {
     }
     
     if (messageName.equals("hit")) {
-        
+        this.deck.dealCard(player);
+        mvcMessaging.notify("boardChangePlayer", player);
     }
     
     if (messageName.equals("stay")) {
