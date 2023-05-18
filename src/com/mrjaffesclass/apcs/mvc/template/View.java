@@ -76,6 +76,10 @@ public class View extends javax.swing.JFrame implements MessageHandler {
     if (messageName.equals("dealer")) {
         jLabel1.setText("DEALER WINS");
     }
+
+    if (messageName.equals("tie")) {
+        jLabel1.setText("TIE");
+    }
   }
 
   /**

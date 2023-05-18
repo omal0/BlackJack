@@ -95,11 +95,14 @@ public class Model implements MessageHandler {
     
     if (messageName.equals("stay")) {
         DealerAI();
+        mvcMessaging.notify("boardChangeDealer", this.dealer);
 
-        if (countCards(dealer) > countCards(player)) {
+        if (countCards(dealer) > countCards(player) && countCards(dealer) <= 21) {
           mvcMessaging.notify("dealer");
-        } else {
+        } else if (countCards(player) > countCards(dealer) && countCards(player) <= 21) {
           mvcMessaging.notify("player");
+        } else {
+          mvcMessaging.notify("tie");
         }
     }
     
