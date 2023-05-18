@@ -52,10 +52,10 @@ public class Model implements MessageHandler {
 
       for(int i = 0; i < 2; i++) {
         this.deck.dealCard(player);
+        mvcMessaging.notify("boardChangeDealer", this.dealer);
         this.deck.dealCard(dealer);
       }
       mvcMessaging.notify("boardChangePlayer", this.player);
-      mvcMessaging.notify("boardChangeDealer", this.dealer);
   }
 
   public void DealerAI() {
@@ -89,17 +89,32 @@ public class Model implements MessageHandler {
     }
     
     if (messageName.equals("hit")) {
-        this.deck.dealCard(player);
-        mvcMessaging.notify("boardChangePlayer", player);
+        if (countCards(player) <= 21) {
+            this.deck.dealCard(player);
+            if (countCards(player) > 21) {
+                mvcMessaging.notify("dealer");
+                mvcMessaging.notify("boardChangePlayer", this.player);
+                mvcMessaging.notify("boardChangeDealer", this.dealer);
+            } else {
+                mvcMessaging.notify("boardChangePlayer", this.player);
+            }
+            mvcMessaging.notify("boardChangePlayer", player);
+        } else if (countCards(player) > 21) {
+            mvcMessaging.notify("dealer");
+        }
     }
     
     if (messageName.equals("stay")) {
-        DealerAI();
-        mvcMessaging.notify("boardChangeDealer", this.dealer);
-
-        if (countCards(dealer) > countCards(player) && countCards(dealer) <= 21) {
+        if (countCards(player) < 21){
+            DealerAI();
+            mvcMessaging.notify("boardChangeDealer", this.dealer);
+        } else {
+            mvcMessaging.notify("boardChangeDealer", this.dealer);
+        }
+        
+        if (countCards(dealer) > countCards(player) || (countCards(player) > 21)) {
           mvcMessaging.notify("dealer");
-        } else if (countCards(player) > countCards(dealer) && countCards(player) <= 21) {
+        } else if (countCards(player) > countCards(dealer) || (countCards(dealer) > 21)) {
           mvcMessaging.notify("player");
         } else {
           mvcMessaging.notify("tie");
