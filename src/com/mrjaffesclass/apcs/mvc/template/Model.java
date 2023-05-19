@@ -112,9 +112,9 @@ public class Model implements MessageHandler {
             mvcMessaging.notify("boardChangeDealer", this.dealer);
         }
         
-        if (countCards(dealer) > countCards(player) || (countCards(player) > 21)) {
+        if (countCards(dealer) > countCards(player) && (countCards(dealer) < 22) || (countCards(player) > 21)) {
           mvcMessaging.notify("dealer");
-        } else if (countCards(player) > countCards(dealer) || (countCards(dealer) > 21)) {
+        } else if (countCards(player) > countCards(dealer) && (countCards(player) < 22) || (countCards(dealer) > 21)) {
           mvcMessaging.notify("player");
         } else {
           mvcMessaging.notify("tie");
