@@ -110,7 +110,7 @@ public class View extends javax.swing.JFrame implements MessageHandler {
             }
         });
 
-        jButton2.setText("Stay (torf)");
+        jButton2.setText("Stay");
         jButton2.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 jButton2ActionPerformed(evt);
